@@ -48,7 +48,10 @@ class HomeScreen extends StatelessWidget {
                     },));
                   },
                   title: Text(marketData.name ?? "",overflow: TextOverflow.ellipsis),
-                  leading: Image.network(marketData.image ?? ""),
+                  leading: Container(
+                    height: 50.0,
+                    width: 50.0,
+                    child: Image.network(marketData.image ?? "")),
                   contentPadding: const EdgeInsets.all(10.0),
                   trailing: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -1,13 +1,15 @@
+import 'package:flutter_crypto_sample/screens/detail/model/market_data_item.dart';
+
 class MarketDataDetails {
   String? id;
   String? symbol;
   String? name;
-  Null? assetPlatformId;
+  String? assetPlatformId;
   int? blockTimeInMinutes;
   String? hashingAlgorithm;
   Null? publicNotice;
   Description? description;
-  Image? image;
+  Image_? image;
   String? genesisDate;
   double? sentimentVotesUpPercentage;
   double? sentimentVotesDownPercentage;
@@ -20,6 +22,7 @@ class MarketDataDetails {
   double? publicInterestScore;
   String? lastUpdated;
   List<Tickers>? tickers;
+  MarketDataItem? marketDataItem;
 
   MarketDataDetails(
       {this.id,
@@ -53,9 +56,9 @@ class MarketDataDetails {
     hashingAlgorithm = json['hashing_algorithm'];
     publicNotice = json['public_notice'];
     description = json['description'] != null
-        ? new Description.fromJson(json['description'])
+        ? Description.fromJson(json['description'])
         : null;
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    image = json['image'] != null ? Image_.fromJson(json['image']) : null;
     genesisDate = json['genesis_date'];
     sentimentVotesUpPercentage = json['sentiment_votes_up_percentage'];
     sentimentVotesDownPercentage = json['sentiment_votes_down_percentage'];
@@ -67,42 +70,44 @@ class MarketDataDetails {
     liquidityScore = json['liquidity_score'];
     publicInterestScore = json['public_interest_score'];
     lastUpdated = json['last_updated'];
+    marketDataItem = json['market_data'] != null ? MarketDataItem.fromJson(json['market_data']) : null;
     if (json['tickers'] != null) {
       tickers = <Tickers>[];
       json['tickers'].forEach((v) {
-        tickers!.add(new Tickers.fromJson(v));
+        tickers!.add(Tickers.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['symbol'] = this.symbol;
-    data['name'] = this.name;
-    data['asset_platform_id'] = this.assetPlatformId;
-    data['block_time_in_minutes'] = this.blockTimeInMinutes;
-    data['hashing_algorithm'] = this.hashingAlgorithm;
-    data['public_notice'] = this.publicNotice;
-    if (this.description != null) {
-      data['description'] = this.description!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['symbol'] = symbol;
+    data['name'] = name;
+    data['asset_platform_id'] = assetPlatformId;
+    data['block_time_in_minutes'] = blockTimeInMinutes;
+    data['hashing_algorithm'] = hashingAlgorithm;
+    data['public_notice'] = publicNotice;
+    if (description != null) {
+      data['description'] = description!.toJson();
     }
-    if (this.image != null) {
-      data['image'] = this.image!.toJson();
+    if (image != null) {
+      data['image'] = image!.toJson();
     }
-    data['genesis_date'] = this.genesisDate;
-    data['sentiment_votes_up_percentage'] = this.sentimentVotesUpPercentage;
-    data['sentiment_votes_down_percentage'] = this.sentimentVotesDownPercentage;
-    data['market_cap_rank'] = this.marketCapRank;
-    data['coingecko_rank'] = this.coingeckoRank;
-    data['coingecko_score'] = this.coingeckoScore;
-    data['developer_score'] = this.developerScore;
-    data['community_score'] = this.communityScore;
-    data['liquidity_score'] = this.liquidityScore;
-    data['public_interest_score'] = this.publicInterestScore;
-    data['last_updated'] = this.lastUpdated;
-    if (this.tickers != null) {
-      data['tickers'] = this.tickers!.map((v) => v.toJson()).toList();
+    data['genesis_date'] = genesisDate;
+    data['sentiment_votes_up_percentage'] = sentimentVotesUpPercentage;
+    data['sentiment_votes_down_percentage'] = sentimentVotesDownPercentage;
+    data['market_cap_rank'] = marketCapRank;
+    data['coingecko_rank'] = coingeckoRank;
+    data['coingecko_score'] = coingeckoScore;
+    data['developer_score'] = developerScore;
+    data['community_score'] = communityScore;
+    data['liquidity_score'] = liquidityScore;
+    data['public_interest_score'] = publicInterestScore;
+    data['last_updated'] = lastUpdated;
+    data['market_data'] = marketDataItem;
+    if (tickers != null) {
+      data['tickers'] = tickers!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -118,30 +123,30 @@ class Description {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['en'] = this.en;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['en'] = en;
     return data;
   }
 }
 
-class Image {
+class Image_ {
   String? thumb;
   String? small;
   String? large;
 
-  Image({this.thumb, this.small, this.large});
+  Image_({this.thumb, this.small, this.large});
 
-  Image.fromJson(Map<String, dynamic> json) {
+  Image_.fromJson(Map<String, dynamic> json) {
     thumb = json['thumb'];
     small = json['small'];
     large = json['large'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['thumb'] = this.thumb;
-    data['small'] = this.small;
-    data['large'] = this.large;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['thumb'] = thumb;
+    data['small'] = small;
+    data['large'] = large;
     return data;
   }
 }
@@ -162,7 +167,7 @@ class Tickers {
   bool? isAnomaly;
   bool? isStale;
   String? tradeUrl;
-  Null? tokenInfoUrl;
+  String? tokenInfoUrl;
   String? coinId;
   String? targetCoinId;
 
@@ -190,14 +195,14 @@ class Tickers {
     base = json['base'];
     target = json['target'];
     market =
-        json['market'] != null ? new Market.fromJson(json['market']) : null;
+        json['market'] != null ? Market.fromJson(json['market']) : null;
     last = json['last'];
     volume = json['volume'];
     convertedLast = json['converted_last'] != null
-        ? new ConvertedLast.fromJson(json['converted_last'])
+        ? ConvertedLast.fromJson(json['converted_last'])
         : null;
     convertedVolume = json['converted_volume'] != null
-        ? new ConvertedLast.fromJson(json['converted_volume'])
+        ? ConvertedLast.fromJson(json['converted_volume'])
         : null;
     trustScore = json['trust_score'];
     bidAskSpreadPercentage = json['bid_ask_spread_percentage'];
@@ -213,31 +218,31 @@ class Tickers {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['base'] = this.base;
-    data['target'] = this.target;
-    if (this.market != null) {
-      data['market'] = this.market!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['base'] = base;
+    data['target'] = target;
+    if (market != null) {
+      data['market'] = market!.toJson();
     }
-    data['last'] = this.last;
-    data['volume'] = this.volume;
-    if (this.convertedLast != null) {
-      data['converted_last'] = this.convertedLast!.toJson();
+    data['last'] = last;
+    data['volume'] = volume;
+    if (convertedLast != null) {
+      data['converted_last'] = convertedLast!.toJson();
     }
-    if (this.convertedVolume != null) {
-      data['converted_volume'] = this.convertedVolume!.toJson();
+    if (convertedVolume != null) {
+      data['converted_volume'] = convertedVolume!.toJson();
     }
-    data['trust_score'] = this.trustScore;
-    data['bid_ask_spread_percentage'] = this.bidAskSpreadPercentage;
-    data['timestamp'] = this.timestamp;
-    data['last_traded_at'] = this.lastTradedAt;
-    data['last_fetch_at'] = this.lastFetchAt;
-    data['is_anomaly'] = this.isAnomaly;
-    data['is_stale'] = this.isStale;
-    data['trade_url'] = this.tradeUrl;
-    data['token_info_url'] = this.tokenInfoUrl;
-    data['coin_id'] = this.coinId;
-    data['target_coin_id'] = this.targetCoinId;
+    data['trust_score'] = trustScore;
+    data['bid_ask_spread_percentage'] = bidAskSpreadPercentage;
+    data['timestamp'] = timestamp;
+    data['last_traded_at'] = lastTradedAt;
+    data['last_fetch_at'] = lastFetchAt;
+    data['is_anomaly'] = isAnomaly;
+    data['is_stale'] = isStale;
+    data['trade_url'] = tradeUrl;
+    data['token_info_url'] = tokenInfoUrl;
+    data['coin_id'] = coinId;
+    data['target_coin_id'] = targetCoinId;
     return data;
   }
 }
@@ -256,10 +261,10 @@ class Market {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['identifier'] = this.identifier;
-    data['has_trading_incentive'] = this.hasTradingIncentive;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['name'] = name;
+    data['identifier'] = identifier;
+    data['has_trading_incentive'] = hasTradingIncentive;
     return data;
   }
 }
@@ -278,10 +283,10 @@ class ConvertedLast {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['btc'] = this.btc;
-    data['eth'] = this.eth;
-    data['usd'] = this.usd;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['btc'] = btc;
+    data['eth'] = eth;
+    data['usd'] = usd;
     return data;
   }
 }
